@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: impactgraph_db
+    restart: always
+    environment:
+      POSTGRES_DB: impactgraph
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: impactgraph_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password123@db:5432/impactgraph
+      - JWT_SECRET=6027c62d007d4b4e8e5cf3bb5f2940cbafaad522b045e821614623b2b7f2940c
+      - IMPACTGRAPH_SECRET_KEY=9899aa320bff4125aad8d365b6077ad59899aa320bff4125aad8d365b6077ad5
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: impactgraph_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:

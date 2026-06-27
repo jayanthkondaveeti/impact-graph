@@ -1,0 +1,27 @@
+# Environments & Configuration
+.env
+.env.local
+
+# Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Node modules & packaging builds
+node_modules/
+dist/
+dist-ssr/
+*.local
+.eslintcache
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+db.sqlite3
