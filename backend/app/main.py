@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.v1 import auth, config
+from app.api.v1 import auth, config, sync
 
 app = FastAPI(
     title="ImpactGraph API",
@@ -20,6 +20,7 @@ app.add_middleware(
 # Register API version 1 routers
 app.include_router(auth.router, prefix="/api/v1/auth", tags=["Authentication"])
 app.include_router(config.router, prefix="/api/v1/config", tags=["Configuration"])
+app.include_router(sync.router, prefix="/api/v1/sync", tags=["Synchronization"])
 
 @app.get("/health", tags=["System"])
 def health_check():

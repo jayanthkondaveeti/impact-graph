@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Dict, Any, Optional
 from uuid import UUID
+from datetime import datetime
 
 class UserLogin(BaseModel):
     username: str = Field(..., min_length=1)
@@ -29,3 +30,15 @@ class ConnectionConfigResponse(BaseModel):
 class ConnectionTestRequest(BaseModel):
     platform: str = Field("snowflake", max_length=50)
     config: Dict[str, Any]
+
+class SyncJobResponse(BaseModel):
+    id: UUID
+    database_id: UUID
+    status: str
+    records_synced: int
+    started_at: datetime
+    completed_at: Optional[datetime] = None
+    error_message: Optional[str] = None
+
+    class Config:
+        from_attributes = True
