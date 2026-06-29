@@ -14,6 +14,26 @@
 
 ---
 
+## 💡 Key Use Cases
+
+### 1. Schema Migration Pre-Checks (Preventing Production Outages)
+*   **The Scenario:** A data engineer needs to rename the column `customer_id` to `customer_uuid` in a central database table.
+*   **The ImpactGraph Solution:** Traces the column lineage downstream, showing that the column is consumed by 3 SQL views and an executive Looker dashboard. It calculates a high blast-radius score, prompting the team to update downstream views *before* deploying the schema change.
+
+### 2. Access Auditing & Compliance (GDPR & SOC 2)
+*   **The Scenario:** A compliance auditor asks: *"Why does the marketing analyst role have read access to the sensitive customer billing table?"*
+*   **The ImpactGraph Solution:** Traces the role inheritance path, showing that the `MARKETING_ANALYST` role inherits permissions from the `DATA_ENGINEER` role which has SELECT privilege on the billing table. The administrator can prune the incorrect inheritance path in seconds.
+
+### 3. Orphaned Asset Cleanup (Reducing Cloud Warehouse Spend)
+*   **The Scenario:** The database contains hundreds of legacy views, and database storage/compute costs are rising.
+*   **The ImpactGraph Solution:** The health risk engine flags "dead views" (views referencing underlying tables that were deleted weeks ago) and "unowned assets" that can be safely purged to reduce warehouse clutter and compute load.
+
+### 4. Root-Cause Analysis (Debugging Data Quality Incidents)
+*   **The Scenario:** A business analyst reports that the `total_revenue` column in a dashboard is skewed.
+*   **The ImpactGraph Solution:** Lineage traversal traces the column's lineage back through 4 intermediate views to the exact source tables and SQL equations, allowing engineers to isolate where the calculation error was introduced.
+
+---
+
 ## 🛠️ Technology Stack
 
 *   **Backend Application:** Python 3.9, FastAPI (Asynchronous REST API), Pydantic (data validations).
