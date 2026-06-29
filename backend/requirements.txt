@@ -13,6 +13,7 @@ psycopg2-binary==2.9.9
 # Cryptography, Auth, and Security
 cryptography==42.0.5
 python-jose[cryptography]==3.3.0
+bcrypt==3.2.0
 passlib[bcrypt]==1.7.4
 
 # Data Processing and Graph Analysis
